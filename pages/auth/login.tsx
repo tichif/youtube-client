@@ -12,7 +12,6 @@ import {
   PasswordInput,
   Stack,
 } from '@mantine/core';
-import { showNotification, updateNotification } from '@mantine/notifications';
 import { useRouter } from 'next/router';
 
 import { login } from '../../api';
