@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { useMe } from '../context/me';
+import UploadVideo from '../components/UploadVideo';
 
 function HomePageLayout({ children }: { children: React.ReactNode }) {
   const { user, refetch } = useMe();
@@ -17,8 +18,8 @@ function HomePageLayout({ children }: { children: React.ReactNode }) {
       }
       header={
         <Header height={60} p='xs'>
-          <Box>
-            <Box>
+          <Box sx={() => ({ display: 'flex' })}>
+            <Box sx={() => ({ flex: '1' })}>
               <Image src='/logo.png' alt='Logo' width={100} height={40} />
             </Box>
             {!user && (
@@ -31,7 +32,7 @@ function HomePageLayout({ children }: { children: React.ReactNode }) {
                 </Link>
               </>
             )}
-            {user && <>Upload video</>}
+            {user && <UploadVideo />}
           </Box>
         </Header>
       }

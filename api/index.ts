@@ -1,9 +1,11 @@
 import axios from 'axios';
+import { Video } from '../types';
 
 const base = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 const userBase = `${base}/api/users`;
 const authBase = `${base}/api/auth`;
+const videosBase = `${base}/api/videos`;
 
 export function registerUser(payload: {
   username: string;
@@ -29,4 +31,36 @@ export function getMe() {
     .catch((err) => {
       return null;
     });
+}
+
+export function uploadVideo({
+  formData,
+  config,
+}: {
+  formData: FormData;
+  config: { onUploadProgress: (ProgressEvent: any) => void };
+}) {
+  return axios
+    .post(videosBase, formData, {
+      withCredentials: true,
+      ...config,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((res) => res.data);
+}
+
+export function updateVideo({
+  videoId,
+  ...payload
+}: {
+  videoId: string;
+  title: string;
+  description: string;
+  published: boolean;
+}) {
+  return axios.patch<Video>(`${videosBase}/${videoId}`, payload, {
+    withCredentials: true,
+  });
 }
