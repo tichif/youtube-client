@@ -17,6 +17,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 
 import { updateVideo, uploadVideo } from '../api';
 import { Video } from '../types';
+import { useVideo } from '../context/video';
 
 function EditVideoForm({
   videoId,
@@ -25,6 +26,7 @@ function EditVideoForm({
   videoId: string;
   setOpened: Dispatch<SetStateAction<boolean>>;
 }) {
+  const { refetch } = useVideo();
   const form = useForm({
     initialValues: {
       title: '',
@@ -40,6 +42,7 @@ function EditVideoForm({
     {
       onSuccess: () => {
         setOpened(false);
+        refetch();
       },
     }
   );
